@@ -1,17 +1,19 @@
 <?php
-/*
-Нажмите кнопку run чтобы запустить тесты.
-Попробуйте изменять код функции / тестов, запуская проверки заново.
-*/
 
-require("src/StringUtils.php");
+namespace StringUtilsTests;
 
-if (StringUtils\capitalize('hello') !== 'Hello') {
-    throw new \Exception('Функция работает неверно!');
+use Webmozart\Assert\Assert;
+
+use function StringUtils\capitalize;
+
+$autoloadPath1 = __DIR__ . '/../../../autoload.php';
+$autoloadPath2 = __DIR__ . '/../vendor/autoload.php';
+
+if (file_exists($autoloadPath1)) {
+    require_once $autoloadPath1;
+} else {
+    require_once $autoloadPath2;
 }
 
-if (StringUtils\capitalize('') !== '') {
-    throw new \Exception('Функция работает неверно!');
-}
-
-echo 'Все тесты пройдены!';
+Assert::eq(capitalize(''), '');
+Assert::eq(capitalize('hello'), 'Hello');
